@@ -15,5 +15,6 @@
     # Helm name of the service
     harbor_deployed_name: harbor
 
-    db_host_name: 
-    db_user_name: 
+    db_host_name: 130.246.214.146
+    db_user_name: postgres
+

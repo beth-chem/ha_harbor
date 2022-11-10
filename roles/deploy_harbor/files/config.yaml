@@ -794,10 +794,10 @@ database:
       #    memory: 128Mi
       #    cpu: 100m
   external:
-    host: "postgres-sql-external-db-postgresql.default.svc.cluster.local"
+    host: "{{ db_host_name }}"
     port: "5432"
     username: "postgres"
-    password: "TrJsfebI7X"
+    password: "{{ DB_PASSWORD }}"
     coreDatabase: "registry"
     notaryServerDatabase: "notary_server"
     notarySignerDatabase: "notary_signer"
