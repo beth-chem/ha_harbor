@@ -1,0 +1,25 @@
+
+- name: Install harbor helm repo
+  kubernetes.core.helm_repository:
+    name: harbor
+    repo_url: https://github.com/goharbor/harbor-helm
+
+- name: Create the harbor namespace
+  kubernetes.core.k8s:
+    name: "{{ harbor_namespace }}"
+    kind: Namespace
+    state: present
+
+- name: Install pre-set version of harbor
+  kubernetes.core.helm:
+    chart_ref: harbor/harbor
+    create_namespace: yes
+    update_repo_cache: yes
+    # Pulled from default
+    name: "{{ harbor_deployed_name }}"
+    release_namespace: "{{ harbor_namespace }}"
+    values_files:
+      - "config.yaml"
+      
+
+  
