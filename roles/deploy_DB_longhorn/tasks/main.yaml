@@ -1,3 +1,23 @@
+<<<<<<< Updated upstream
+=======
+- name: ensure python3 is installed
+  become: yes
+  ansible.builtin.package:
+    name:
+      - python3
+      - python3-pip
+    state: present
+
+- name: install pip packages
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "ansible"
+    - "psycopg2-binary"
+    - "kubernetes"
+
+>>>>>>> Stashed changes
 - name: Create Longhorn namespace
   kubernetes.core.k8s:
     name: longhorn-system
@@ -48,9 +68,10 @@
 ## host requires psycopg2 to execute this module (postgresql_db)
 
 
-- name: Create a new database with name "postgres"
+- name: Create a new databases 
   postgresql_db:
-    name: postgres
+    name: "{{ item }}"
+    state: present
     login_host: "{{ db_host_name }}"
     login_user: "{{ db_user_name }}"
     login_password: "{{ lookup('env', 'DB_PASSWORD') }}"

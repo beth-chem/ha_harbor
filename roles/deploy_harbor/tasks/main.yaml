@@ -1,8 +1,12 @@
+- name:  Template a file to /tmp/config.yaml
+  ansible.builtin.template:
+    src: "config.yaml.j2"
+    dest: "/tmp/config.yaml"
 
-- name: Install harbor helm repo
+- name: Add stable harbor helm chart repo
   kubernetes.core.helm_repository:
     name: harbor
-    repo_url: https://github.com/goharbor/harbor-helm
+    repo_url: https://helm.goharbor.io
 
 - name: Create the harbor namespace
   kubernetes.core.k8s:
@@ -10,7 +14,7 @@
     kind: Namespace
     state: present
 
-- name: Install pre-set version of harbor
+- name: Deploy harbor
   kubernetes.core.helm:
     chart_ref: harbor/harbor
     create_namespace: yes
@@ -19,7 +23,10 @@
     name: "{{ harbor_deployed_name }}"
     release_namespace: "{{ harbor_namespace }}"
     values_files:
-      - "config.yaml"
+      - "/tmp/config.yaml"
       
+
+
+
 
   
